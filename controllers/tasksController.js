@@ -53,16 +53,16 @@ const updateTask = async (req,res) => {
     })
 };
 
-const deleteTask =async (req,res) => {
+const deleteTask = async (req,res) => {
     const id = req.params.id;
     const deleteTask = await Task.findByIdAndDelete(id);
     if (!deleteTask) {
         return res.status(404).json({ error : 'Task not found'});
 
     }
-    res.json[{
+    res.json({
         deleteTask : deleteTask
-    }]
+    })
 
 };
 
@@ -72,6 +72,4 @@ module.exports = {
     getOneTask,
     updateTask,
     deleteTask
-
-
 }

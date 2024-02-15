@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TodoSchema = new Schema({
-   name : {
+   lastName : {
         type: String,
         required :true
     },
@@ -20,16 +20,12 @@ const TodoSchema = new Schema({
         required :true
 
     },
-    complete : {
-        type: Boolean,
-        default: false
-    },
     timestamp: {
         type: String,
         default: Date.now()
     }
 });
 
-const User = mongoose.model("Todo", TodoSchema);
+const User = mongoose.model("User", TodoSchema);
 
 module.exports = User;
