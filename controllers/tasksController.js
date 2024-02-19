@@ -1,72 +1,70 @@
+
 const Task = require('../models/taskModel');
 const User = require('../models/userModel');
 
-
-const createTask = (req,res) => {
+const createTask = async (req, res) => {
     const text = req.body.text;
-    const userID = req.user._id;
-    const task = new Task({
-        text,
-        userId,
-    })
-    task.save()
-    res.json({
-        task : task
-    })
-};
+    const userId = req.user._id; 
 
-const getAllTask = async (req,res) => {
-
-    const tasks = await Task.find();
-
-    res.json({
-
-        data: {
-            tasks
-        }
-    })
-
-};
-
-const getOneTask = async (req,res) => {
-    const id = req.params.id ;
-    const task = await Task.findById(id);
-    if(!task) {
-        return res.status(404).json({error : 'Task not found'});
-
+    try {
+        const task = new Task({
+            text,
+            userId
+        });
+        await task.save();
+        res.json({ task });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
     }
-    res.json({
-        task : task
-
-    })
 };
 
-const updateTask = async (req,res) => {
+const getAllTask = async (req, res) => {
+    try {
+        const tasks = await Task.find();
+        res.json({ data: { tasks } });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const getOneTask = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const task = await Task.findById(id);
+        if (!task) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+        res.json({ task });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const updateTask = async (req, res) => {
     const id = req.params.id;
     const update = req.body;
-    const updateTask = await Task.findByIdAndUpdate(id,update, {new:true});
-
-    if(!updateTask) {
-
-        return res.status(404).json({ error : 'Task not found'});
-
+    try {
+        const updateTask = await Task.findByIdAndUpdate(id, update, { new: true });
+        if (!updateTask) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+        res.json({ updateTask });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
     }
-    res.json({
-        updateTask : updateTask
-    })
 };
 
-const deleteTask = async (req,res) => {
+const deleteTask = async (req, res) => {
     const id = req.params.id;
-    const deleteTask = await Task.findByIdAndDelete(id);
-    if (!deleteTask) {
-        return res.status(404).json({ error : 'Task not found'});
-
+    try {
+        const deleteTask = await Task.findByIdAndDelete(id);
+        if (!deleteTask) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+        res.json({ deleteTask });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
     }
-    res.json({
-        deleteTask : deleteTask
-    })
-
 };
 
 module.exports = {
@@ -75,4 +73,5 @@ module.exports = {
     getOneTask,
     updateTask,
     deleteTask
-}
+};
+
