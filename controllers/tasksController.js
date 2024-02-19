@@ -1,10 +1,13 @@
 const Task = require('../models/taskModel');
+const User = require('../models/userModel');
 
 
 const createTask = (req,res) => {
     const text = req.body.text;
+    const userID = req.user._id;
     const task = new Task({
-        text
+        text,
+        userId,
     })
     task.save()
     res.json({

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const TodoSchema = new Schema({
+const UserSchema = new Schema({
    lastName : {
         type: String,
         required :true
@@ -26,6 +26,6 @@ const TodoSchema = new Schema({
     }
 });
 
-const User = mongoose.model("User", TodoSchema);
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;

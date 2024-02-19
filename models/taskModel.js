@@ -6,6 +6,10 @@ const TodoSchema = new Schema({
         type: String,
         required :true
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        required: true
+    },
     complete : {
         type: Boolean,
         default: false

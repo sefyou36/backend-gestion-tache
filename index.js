@@ -7,9 +7,9 @@ require('./config/config')
 
 app.use(express.json());
 
-const taskRouter = require('./routers/router');
+const allRoute = require('./routers/router');
 
-app.use('/api',taskRouter)
+app.use('/api',allRoute)
 
 
 app.listen(port,() => {

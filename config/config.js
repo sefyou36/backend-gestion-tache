@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost:27017/TaskManagement', {
+require("dotenv").config();
+
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
 }).then(()=> console.log("Connected to MongoDB")).catch(console.error)
 
-module.exports = mongoose; 
+module.exports = mongoose;  
