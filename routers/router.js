@@ -18,14 +18,13 @@ router.put('/v1/user/:id',updateUser);
 router.delete('/v1/user/:id',deleteUser);
 
 
-router.post('/v1/register', register);
+
 router.post('/v1/login', loginUser);
-// router.get("/v1/protected-route", jwtMiddleware, (req, res) => {
-//     // Cette route est protégée par le middleware jwtMiddleware
-//     // Vous pouvez accéder à l'identifiant de l'utilisateur à partir de req.userId
-//     res.json({ message: "You are authorized to access this route" });
-//   });
-  
+router.post('/v1/register', register ,(req, res) => {
+    const { firstName, lastName, email, password } = req.body;
+    console.log('Received registration data:', { firstName, lastName, email, password });
+    res.json({ message: 'Registration successful' });
+  });
 
 
 

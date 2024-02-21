@@ -5,6 +5,10 @@ const port = 4200;
 
 require('./config/config')
 
+app.use(cors({
+    origin : 'http://localhost:5173'
+  }));
+
 app.use(express.json());
 
 const allRoute = require('./routers/router');

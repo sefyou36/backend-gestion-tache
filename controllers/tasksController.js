@@ -4,7 +4,7 @@ const User = require('../models/userModel');
 
 const createTask = async (req, res) => {
     const text = req.body.text;
-    const userId = req.user._id; 
+    const userId = req.userId; 
 
     try {
         const task = new Task({
@@ -19,9 +19,10 @@ const createTask = async (req, res) => {
 };
 
 const getAllTask = async (req, res) => {
+    const userId = req.userId; 
     try {
         const tasks = await Task.find();
-        res.json({ data: { tasks } });
+        res.json({ data: { tasks ,userId } });
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
     }

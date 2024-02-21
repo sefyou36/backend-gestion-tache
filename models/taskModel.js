@@ -6,10 +6,7 @@ const TodoSchema = new Schema({
         type: String,
         required :true
     },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId, 
-        required: true
-    },
+  
     complete : {
         type: Boolean,
         default: false
@@ -19,6 +16,9 @@ const TodoSchema = new Schema({
         default: Date.now()
     }
 });
+TodoSchema.virtual('id').get(function() {
+    return this._id.toHexString();
+  });
 
 const Task= mongoose.model("Task", TodoSchema);
 
