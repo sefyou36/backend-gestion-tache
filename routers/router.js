@@ -1,7 +1,7 @@
 const express = require('express');
 const { createTask, getAllTask, getOneTask, updateTask, deleteTask } = require('../controllers/tasksController');
 const {createUser ,getAllUser,getOneUser,updateUser,deleteUser} = require('../controllers/usersControllers');
-const {register, loginUser, jwtMiddleware } = require('../controllers/auth/authController');
+const {register, loginUser } = require('../controllers/auth/authController');
 
 const router = express.Router();
 
@@ -19,13 +19,22 @@ router.delete('/v1/user/:id',deleteUser);
 
 
 
-router.post('/v1/login', loginUser);
 router.post('/v1/register', register ,(req, res) => {
     const { firstName, lastName, email, password } = req.body;
     console.log('Received registration data:', { firstName, lastName, email, password });
     res.json({ message: 'Registration successful' });
   });
 
-
+  //Route de connexion 
+router.post('/v1/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const token = await loginUser(email, password);
+        res.status(200).json({ message: 'Login successful', token });
+    } catch (error) {
+        console.error('Error logging in:', error);
+        res.status(400).json({ message: error.message });
+    }
+});
 
 module.exports = router
