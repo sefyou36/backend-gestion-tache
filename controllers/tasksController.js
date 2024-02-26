@@ -1,6 +1,5 @@
 
 const Task = require('../models/taskModel');
-const User = require('../models/userModel');
 
 const createTask = async (req, res) => {
     const text = req.body.text;
