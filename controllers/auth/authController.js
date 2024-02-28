@@ -10,6 +10,20 @@ console.log(User);
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended:true}));
 
+const jwtMiddleware = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: "Missing token" });
+  }
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    req.userId = decoded.userId;
+    next();
+  });
+};
+
 const register = async (req, res) => {
   try {
     const { lastName, firstName, password, email } = req.body;
@@ -55,20 +69,7 @@ const loginUser = async (email, password) => {
 };
 
 
-const jwtMiddleware = (req, res, next) => {
-    const token = req.headers.authorization;
-    if (!token) {
-      return res.status(401).json({ message: "Missing token" });
-    }
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        return res.status(401).json({ message: "Invalid token" });
-      }
-      req.userId = decoded.userId;
-      next();
-    });
-  };
-  
+
 
 module.exports = {
   register,
